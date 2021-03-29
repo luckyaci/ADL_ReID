@@ -1,4 +1,5 @@
 # ADL_ReID
+We will standardize our code before the paper is published
 
 requirements：
 torch==1.3.1
@@ -9,7 +10,9 @@ fire
 tqdm
 
 #train
+
 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES='gpu_num' python train.py train --trainset_name market --save_dir='save_dir'
 
 #test
+
 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES='gpu_num' python test.py train --trainset_name market --save_dir='save_dir'
