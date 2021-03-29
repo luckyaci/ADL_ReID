@@ -1,5 +1,5 @@
 # ADL_ReID
-We will standardize our code before the paper is published
+We will standardize our code before the paper is published and complete a detailed description!
 
 requirements：
 torch==1.3.1
