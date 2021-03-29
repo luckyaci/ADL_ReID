@@ -56,12 +56,6 @@ def train(**kwargs):
     )
     print('initializing model ...')
     model = ResNetBuilder(train_dataset.num_train_pids)
-    #######test accuracy
-    model_path = os.path.join("./pytorch-ckpt/formalexp", opt.save_dir,
-                              'model_best.pth.tar')
-    model = load_previous_model(model, model_path, load_fc_layers=False)
-    model.eval()
-    #######test accuracy
     optim_policy = model.get_optim_policy()
     print('model size: {:.5f}M'.format(sum(p.numel()
                                            for p in model.parameters()) / 1e6))
