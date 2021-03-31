@@ -29,7 +29,7 @@ torchvision==0.4.2
 |       +-- list_gallery.txt
 + -- other files in this repo
 </pre>
-### train
+## train
 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES='gpu_num' python train.py train --trainset_name market --save_dir='save_dir'
 
 ## test
