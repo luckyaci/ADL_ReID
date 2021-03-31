@@ -3,11 +3,9 @@ We will standardize our code and complete a detailed description before the pape
 
 ## requirements
 torch==1.3.1
+
 torchvision==0.4.2
-tensorboard
-future
-fire
-tqdm
+
 
 ## Datasets
 **Market-1501, DukeMTMC-reID, and MSMT17 should be organized as follows:**
