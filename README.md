@@ -29,7 +29,10 @@ We will standardize our code and add a detailed description before the paper is 
 + -- other files in this repo
 </pre>
 ## train
+```shell script
 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES='gpu_num' python train.py train --trainset_name market --save_dir='save_dir'
-
+```
 ## test
+```shell script
 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES='gpu_num' python test.py train --trainset_name market --save_dir='save_dir'
+```
