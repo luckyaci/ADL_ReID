@@ -26,38 +26,7 @@ class CameraClsTrainer(BaseTrainer):
         self.camids = camids.cuda()
         self.path = path
 
-    def _ogranize_data(self):
-        unique_camids = torch.unique(self.camids).cpu().numpy()
-        reorg_data = []
-        reorg_pids = []
-        reorg_camids = []
-        reorg_path = []
-        for current_camid in unique_camids:
-            current_camid = (self.camids == current_camid).nonzero().view(-1)
-            if current_camid.size(0) > 1:
-                data = torch.index_select(self.data, index=current_camid, dim=0)
-                pids = torch.index_select(self.pids, index=current_camid, dim=0)
-                camids = torch.index_select(self.camids, index=current_camid, dim=0)
-                path = self.path[current_camid]
-                reorg_data.append(data)
-                reorg_pids.append(pids)
-                reorg_camids.append(camids)
-                reorg_path.append(path)
 
-        # Sort the list for our modified data-parallel
-        # This process helps to increase efficiency when utilizing multiple GPUs
-        # However, our experiments show that this process slightly decreases the final performance
-        # You can enable the following process if you prefer
-        # sort_index = [x.size(0) for x in reorg_pids]
-        # sort_index = [i[0] for i in sorted(enumerate(sort_index), key=lambda x: x[1], reverse=True)]
-        # reorg_data = [reorg_data[i] for i in sort_index]
-        # reorg_pids = [reorg_pids[i] for i in sort_index]
-        # ===== The end of the sort process ==== #
-        self.data = reorg_data
-        self.pids = reorg_pids
-        self.camids = reorg_camids
-        self.path = reorg_path
-        #print(self.camids)
 
     def _forward(self, data, path):
         feat, id_scores, cam_scores, pzx_scores, pzpx_scores = self.model(data,path=path)
@@ -177,10 +146,9 @@ def cosine(a,b):
     nor_b = b / b.norm(dim=-1, keepdim = True)
     distance = torch.mm(nor_a ,nor_b.transpose(1,0))
     average_dis = distance.sum(dim=-1)/nor_b.size(0)
-    #print(average_dis.size())
     average_dis = average_dis.sum()/nor_a.size(0)
 
-    #print(average_dis)
+
     return torch.abs(average_dis)
 
 

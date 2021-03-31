@@ -115,36 +115,28 @@ class ResNetBuilder(nn.Module):
             self.agent = SmoothingForImage(momentum=0.9, num=1)            
             
     def forward(self, x, path=None):
-        """ for name, module in self.base._modules.items():
-            
-            x = module(x)
-            #print(name)
-            if name == self.final_layer:
-                break """
+
         x = self.base(x)
         feat_before_bn = x
-        #print(feat_before_bn.size())
+
         feat_before_bn = F.avg_pool2d(feat_before_bn, feat_before_bn.shape[2:])
         feat_before_bn = feat_before_bn.view(feat_before_bn.shape[0], -1)
         
-        """ detach_fea = feat_before_bn.detach()
-        #print(len(path))
+        detach_fea = feat_before_bn.detach()
+
         if path:
             detach_fea = self.agent.get_soft_label(path, detach_fea)
-            #print(detach_fea.size())
-        detach_fea.requires_grad_() """
+
+        detach_fea.requires_grad_()
         detach_fea = feat_before_bn
-        #camera setting
+
         latent_code = self.RFM(detach_fea)
         pzx = torch.cat((feat_before_bn, latent_code), 1 )
         random_index = random.sample(range(0,latent_code.size(0)),latent_code.size(0))
 
         random_code = latent_code[random_index]
         pzpx = torch.cat((feat_before_bn, random_code), 1 )
-        #print(camfea.sum(1))
-        #feat_before_bn = (feat_before_bn - camfea)
 
-        #shuffle camfe
         
         feat_after_bn = self.bottleneck(feat_before_bn)
 
@@ -155,7 +147,7 @@ class ResNetBuilder(nn.Module):
             classification_results = self.classifier(feat_after_bn)
             #classification_results = self.classifier(latent_code)
             pzx_scores, pzpx_scores = self.DAL(pzx, pzpx)
-            #print(cano_cor)
+
             cam_score = self.cam_classifier(latent_code)
             #cam_score = self.cam_classifier(feat_after_bn)
 
@@ -186,7 +178,7 @@ class ResNetBuilder(nn.Module):
 #camera clssfier
 class RFM(nn.Module):
     '''
-    Residual Factorization Module in paper.
+    Camera feature extrctor "E" in paper.
     '''
     def __init__(self, n_in):
         super().__init__()
@@ -203,7 +195,7 @@ class RFM(nn.Module):
 
 class DAL_regularizer(nn.Module):
     '''
-    Decorrelated Adversarial Learning module in paper.
+    Disentangled Feature Learning module in paper.
     '''
     def __init__(self, n_in):
         super().__init__()
@@ -218,11 +210,7 @@ class DAL_regularizer(nn.Module):
     def forward(self, pzx, pzpx):
         pzx_scores = self.discrimintor(pzx)
         pzpx_scores = self.discrimintor(pzpx)
-        #print(vs_age.size())
-        #print(vs_id)
-        """ rho = ((vs_age - vs_age.mean(dim=0)) * (vs_id - vs_id.mean(dim=0))).mean(dim=0).pow(2) \
-                / ( (vs_age.var(dim=0) + 1e-6) * (vs_id.var(dim=0) + 1e-6)) """
-        #print(rho)
+
         return pzx_scores, pzpx_scores
 
 
