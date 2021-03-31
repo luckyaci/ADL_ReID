@@ -1,6 +1,7 @@
 # ADL_ReID
 We will standardize our code and add a detailed description before the paper is published !
-![image] ( https://github.com/luckyaci/ADL_ReID/blob/main/framework.PNG)
+
+![image]( https://github.com/luckyaci/ADL_ReID/blob/main/framework.PNG)
 ## requirements
 * torch==1.3.1
 * torchvision==0.4.2
