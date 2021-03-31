@@ -2,9 +2,8 @@
 We will standardize our code and add a detailed description before the paper is published !
 
 ## requirements
-torch==1.3.1
-
-torchvision==0.4.2
+* torch==1.3.1
+* torchvision==0.4.2
 
 
 ## Datasets
