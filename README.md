@@ -1,5 +1,5 @@
 # ADL_ReID
-* Recent changes：Due to need of ablation study experiments, you may encounter problems with out-of-bounds labels. We have modifide our code. You can clone our latest code for training !
+* Recent changes：Due to need of ablation study experiments, you may encounter problems with out-of-bounds labels. We have modified our code. You can clone our latest code for training !
 
 We will standardize our code and add a detailed description before the paper is published !
 
