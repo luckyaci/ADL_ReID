@@ -156,7 +156,7 @@ class ResNetBuilder(nn.Module):
 
             return feat_after_bn, classification_results, cam_score, pzx_scores, pzpx_scores
         else:
-            return latent_code
+            return feat_after_bn
 
     def get_optim_policy(self):
         base_param_group = filter(lambda p: p.requires_grad, self.base.parameters())
