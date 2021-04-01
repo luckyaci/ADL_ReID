@@ -49,7 +49,7 @@ def train(**kwargs):
     summary_writer = SummaryWriter(os.path.join('./pytorch-ckpt/formalexp', opt.save_dir, 'tensorboard_log'))
 
     trainloader = DataLoader(
-        data_manager.init_datafolder(opt.trainset_name, train_dataset.gallery, TrainTransform(opt.height, opt.width)),
+        data_manager.init_datafolder(opt.trainset_name, train_dataset.train, TrainTransform(opt.height, opt.width)),
         sampler=IdentitySampler(train_dataset.train, opt.train_batch, opt.num_instances),
         batch_size=opt.train_batch, num_workers=opt.workers,
         pin_memory=pin_memory, drop_last=True, collate_fn=NormalCollateFn()
