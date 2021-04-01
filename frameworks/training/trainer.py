@@ -86,7 +86,7 @@ class CameraClsTrainer(BaseTrainer):
                 self._backward()
                 self.optimizer.step()
 
-            
+            losses.update(idloss)
 
             torch.cuda.synchronize()
             batch_time.update(time.time() - tic)

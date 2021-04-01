@@ -34,7 +34,7 @@ def train(**kwargs):
     np.random.seed(opt.seed)
 
     use_gpu = torch.cuda.is_available()
-    sys.stdout = Logger(os.path.join('./pytorch-ckpt/formalexp', opt.save_dir, 'log_train_camacc.txt'))
+    sys.stdout = Logger(os.path.join('./exp/formalexp', opt.save_dir, 'log_train_camacc.txt'))
 
     if use_gpu:
         print('currently using GPU')
@@ -46,7 +46,7 @@ def train(**kwargs):
     train_dataset = data_manager.init_dataset(name=opt.trainset_name,
                                               num_bn_sample=opt.batch_num_bn_estimatation * opt.test_batch)
     pin_memory = True if use_gpu else False
-    summary_writer = SummaryWriter(os.path.join('./pytorch-ckpt/formalexp', opt.save_dir, 'tensorboard_log'))
+    summary_writer = SummaryWriter(os.path.join('./exp/formalexp', opt.save_dir, 'tensorboard_log'))
 
     trainloader = DataLoader(
         data_manager.init_datafolder(opt.trainset_name, train_dataset.train, TrainTransform(opt.height, opt.width)),
@@ -84,7 +84,7 @@ def train(**kwargs):
     for epoch in range(opt.max_epoch):
         adjust_lr(optimizer, epoch)
         reid_trainer.train(epoch, trainloader)
-        assert False
+ 
 
     if use_gpu:
         state_dict = model.module.state_dict()
@@ -94,7 +94,7 @@ def train(**kwargs):
     save_checkpoint({
         'state_dict': state_dict,
         'epoch': epoch + 1,
-    }, save_dir=os.path.join('./pytorch-ckpt/formalexp', opt.save_dir))
+    }, save_dir=os.path.join('./exp/formalexp', opt.save_dir))
 
 
 if __name__ == '__main__':
